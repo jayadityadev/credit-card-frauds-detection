@@ -4,6 +4,7 @@ import { useMemo, useState } from "react";
 import ModelComparison from "./components/ModelComparison";
 import MLInsights from "./components/MLInsights";
 import TransactionForm from "./components/TransactionForm";
+import PredictionFlow from "./components/PredictionFlow";
 import { predictFraud, type PredictionResult, type Transaction } from "@/lib/api";
 
 const FEATURE_KEYS = [
@@ -158,7 +159,7 @@ export default function Home() {
             plots, and metrics derived from the notebook pipeline.
           </p>
           <div className="mt-5 flex flex-wrap gap-2">
-            {sampleInfo.map((sample) => (
+            {sampleInfo.map((sample, idx) => (
               <button
                 key={sample.label}
                 type="button"
@@ -168,9 +169,16 @@ export default function Home() {
                   setResult(null);
                   setErrorMessage("");
                 }}
-                className="rounded-full border border-black/15 bg-white px-4 py-2 text-sm font-medium transition hover:-translate-y-0.5 hover:bg-slate-50"
+                className="relative rounded-full border border-black/15 bg-white px-4 py-2 text-sm font-medium transition hover:-translate-y-0.5 hover:bg-slate-50 overflow-hidden group"
+                style={{ animation: `slideInDown 0.5s ease-out ${idx * 100}ms both` }}
               >
-                {sample.label}
+                <span className="relative z-10 flex items-center gap-2">
+                  <span>
+                    {idx === 0 ? "✓" : "⚠"}
+                  </span>
+                  {sample.label}
+                </span>
+                <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white to-transparent opacity-0 group-hover:opacity-30" style={{ animation: "shimmer 2s infinite" }} />
               </button>
             ))}
           </div>
@@ -185,6 +193,8 @@ export default function Home() {
           errorMessage={errorMessage}
           parsedTransaction={parsedTransaction}
         />
+
+        <PredictionFlow isLoading={isLoading} />
 
         {result ? <ModelComparison result={result} /> : null}
         <MLInsights />

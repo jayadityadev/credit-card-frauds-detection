@@ -12,34 +12,54 @@ function isoVerdictFromScore(score: number): "fraud" | "legit" {
 export default function ModelComparison({ result }: ModelComparisonProps) {
   const isoVerdict = isoVerdictFromScore(result.isolation_forest_anomaly_score);
 
+  const cards = [
+    {
+      title: "Consensus",
+      verdict: result.consensus,
+      subtitle: "Deterministic LR/RF consensus with confidence-margin tie-break",
+    },
+    {
+      title: "Isolation Forest",
+      verdict: isoVerdict,
+      subtitle: "Based on anomaly score sign. Higher positive values indicate greater anomaly.",
+      metricLabel: "Anomaly score",
+      metricValue: result.isolation_forest_anomaly_score,
+    },
+    {
+      title: "Logistic Regression",
+      verdict: result.logistic_regression,
+      metricLabel: "Fraud probability",
+      metricValue: result.lr_fraud_probability,
+      metricAsPercent: true,
+    },
+    {
+      title: "Random Forest",
+      verdict: result.random_forest,
+      metricLabel: "Fraud probability",
+      metricValue: result.rf_fraud_probability,
+      metricAsPercent: true,
+    },
+  ];
+
   return (
-    <section className="mt-8 grid grid-cols-1 gap-4 md:grid-cols-2 xl:grid-cols-4">
-      <ResultCard
-        title="Consensus"
-        verdict={result.consensus}
-        subtitle="Deterministic LR/RF consensus with confidence-margin tie-break"
-      />
-      <ResultCard
-        title="Isolation Forest"
-        verdict={isoVerdict}
-        subtitle="Based on anomaly score sign. Higher positive values indicate greater anomaly."
-        metricLabel="Anomaly score"
-        metricValue={result.isolation_forest_anomaly_score}
-      />
-      <ResultCard
-        title="Logistic Regression"
-        verdict={result.logistic_regression}
-        metricLabel="Fraud probability"
-        metricValue={result.lr_fraud_probability}
-        metricAsPercent
-      />
-      <ResultCard
-        title="Random Forest"
-        verdict={result.random_forest}
-        metricLabel="Fraud probability"
-        metricValue={result.rf_fraud_probability}
-        metricAsPercent
-      />
+    <section className="mt-8">
+      <h2 className="text-xl font-semibold mb-4" style={{ animation: "slideInDown 0.5s ease-out" }}>
+        Prediction Results
+      </h2>
+      <div className="grid grid-cols-1 gap-4 md:grid-cols-2 xl:grid-cols-4">
+        {cards.map((card, idx) => (
+          <ResultCard
+            key={card.title}
+            index={idx}
+            title={card.title}
+            verdict={card.verdict as "fraud" | "legit" | "uncertain"}
+            subtitle={card.subtitle}
+            metricLabel={card.metricLabel}
+            metricValue={card.metricValue}
+            metricAsPercent={card.metricAsPercent}
+          />
+        ))}
+      </div>
     </section>
   );
 }

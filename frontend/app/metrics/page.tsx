@@ -48,50 +48,90 @@ const PLOTS = [
 
 export default function MetricsPage() {
   return (
-    <div className="relative min-h-screen overflow-hidden px-4 py-10 md:px-8">
-      <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_10%_8%,rgba(15,148,136,0.14),transparent_30%),radial-gradient(circle_at_90%_12%,rgba(227,113,50,0.16),transparent_28%)]" />
-      <main className="relative mx-auto max-w-7xl">
-        <header className="mb-6 rounded-3xl border border-black/10 bg-white/70 p-6 shadow-[0_12px_45px_rgba(23,29,42,0.1)] backdrop-blur-sm">
-          <p className="text-xs tracking-[0.2em] text-slate-600 uppercase">Phase 7 Metrics View</p>
-          <h1 className="mt-2 text-3xl font-bold tracking-tight text-[var(--ink)] md:text-4xl">
-            Full ML Metrics and Plot Interpretations
-          </h1>
-          <p className="mt-3 text-sm text-slate-700 md:text-base">
-            This page presents notebook-generated visuals in presentation-friendly size.
-            Each plot includes the key takeaway to mention during demo or viva.
-          </p>
-          <Link
-            href="/"
-            className="mt-4 inline-flex items-center rounded-full border border-black/20 bg-white px-4 py-2 text-sm font-semibold text-slate-900 transition hover:bg-slate-50"
-          >
-            Back to Prediction Console
-          </Link>
+    <div className="relative min-h-screen overflow-hidden px-4 py-10 md:px-8 bg-[var(--background)]">
+      <main className="relative mx-auto max-w-7xl z-10">
+        <header className="mb-10 group">
+          <div className="relative rounded-2xl border border-cyan-500/20 bg-gradient-to-br from-[var(--background-secondary)]/80 via-[var(--background)]/60 to-[var(--background)]/40 p-8 backdrop-blur-xl overflow-hidden">
+            <div className="absolute inset-0 rounded-2xl" style={{ animation: "glow-border 3s ease-in-out infinite", pointerEvents: "none" }} />
+            
+            <div className="relative z-10">
+              <p className="text-xs tracking-widest text-cyan-400/70 uppercase font-semibold" style={{ animation: "blur-fade-in 0.8s ease-out" }}>Analysis & Visualization</p>
+              <h1 className="mt-3 text-5xl font-bold tracking-tight text-white" style={{ animation: "blur-fade-in 0.8s ease-out 0.1s both" }}>
+                Model Metrics & Plot Analysis
+              </h1>
+              <p className="mt-4 max-w-3xl text-base text-gray-400 leading-relaxed" style={{ animation: "blur-fade-in 0.8s ease-out 0.2s both" }}>
+                Comprehensive visualizations and interpretations from the training pipeline. Each plot presents critical insights into model behavior, feature importance, and performance characteristics.
+              </p>
+              
+              <div className="mt-6 flex flex-wrap gap-4" style={{ animation: "blur-fade-in 0.8s ease-out 0.3s both" }}>
+                <Link
+                  href="/"
+                  className="relative rounded-lg border border-cyan-500/40 bg-gradient-to-r from-cyan-500/20 to-cyan-600/10 px-6 py-3 text-sm font-semibold text-cyan-300 transition-all duration-300 hover:border-cyan-400/60 hover:shadow-[0_0_25px_rgba(6,182,212,0.4)] flex items-center gap-2 group/btn overflow-hidden"
+                >
+                  <span className="relative z-10 flex items-center gap-2">
+                    <svg className="h-4 w-4 group-hover/btn:-translate-x-1 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+                    </svg>
+                    Back to Console
+                  </span>
+                  <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white to-transparent opacity-0 group-hover/btn:opacity-20" style={{ animation: "shimmer 2s infinite" }} />
+                </Link>
+              </div>
+            </div>
+          </div>
         </header>
 
-        <section className="space-y-6">
-          {PLOTS.map((plot) => (
+        <section className="space-y-8">
+          {PLOTS.map((plot, idx) => (
             <article
               key={plot.src}
-              className="rounded-3xl border border-black/10 bg-white/80 p-4 shadow-[0_10px_35px_rgba(23,29,42,0.08)] backdrop-blur-sm md:p-6"
+              className="relative rounded-2xl border border-cyan-500/20 bg-gradient-to-br from-[var(--background-secondary)]/80 via-[var(--background)]/60 to-[var(--background)]/40 p-6 md:p-8 backdrop-blur-xl overflow-hidden group"
+              style={{ animation: `blur-fade-in 0.8s ease-out ${0.4 + idx * 0.1}s both` }}
             >
-              <h2 className="text-xl font-bold text-[var(--ink)]">{plot.title}</h2>
-              <p className="mt-2 rounded-xl border border-slate-200 bg-slate-50 px-4 py-3 text-sm text-slate-800 md:text-base">
-                <span className="font-semibold">What to infer: </span>
-                {plot.inference}
-              </p>
-              <div className="mt-4 overflow-hidden rounded-2xl border border-slate-200 bg-white">
-                <Image
-                  src={plot.src}
-                  alt={plot.title}
-                  width={1600}
-                  height={1000}
-                  className="h-auto w-full object-contain"
-                  priority={plot.src === "/ml/class_distribution.png"}
-                />
+              <div className="absolute inset-0 rounded-2xl" style={{ animation: "glow-border 3s ease-in-out infinite", pointerEvents: "none" }} />
+              
+              <div className="relative z-10">
+                <div className="flex items-start justify-between gap-4 mb-6">
+                  <div>
+                    <div className="flex items-center gap-3 mb-2">
+                      <div className="h-10 w-10 rounded-lg bg-gradient-to-br from-cyan-500/20 to-purple-500/20 border border-cyan-500/30 flex items-center justify-center text-cyan-400 font-bold">
+                        {idx + 1}
+                      </div>
+                      <h2 className="text-2xl font-bold text-white">{plot.title}</h2>
+                    </div>
+                  </div>
+                </div>
+
+                <div className="rounded-lg border border-cyan-500/20 bg-[var(--background-secondary)]/50 p-5 mb-6 backdrop-blur">
+                  <p className="flex items-start gap-3 text-gray-300 leading-relaxed">
+                    <span className="text-cyan-400 font-bold text-lg mt-0.5">→</span>
+                    <span>
+                      <span className="font-semibold text-cyan-300">Key Insight: </span>
+                      {plot.inference}
+                    </span>
+                  </p>
+                </div>
+
+                <div className="overflow-hidden rounded-xl border border-cyan-500/20 bg-[var(--background-secondary)]/30 backdrop-blur p-4">
+                  <Image
+                    src={plot.src}
+                    alt={plot.title}
+                    width={1600}
+                    height={1000}
+                    className="h-auto w-full object-contain rounded-lg transition-transform duration-500 group-hover:scale-105"
+                    priority={plot.src === "/ml/class_distribution.png"}
+                  />
+                </div>
               </div>
             </article>
           ))}
         </section>
+
+        <footer className="mt-16 text-center" style={{ animation: "blur-fade-in 0.8s ease-out 1.5s both" }}>
+          <p className="text-gray-500 text-sm">
+            All visualizations generated from training notebook pipeline • Metrics computed on test set
+          </p>
+        </footer>
       </main>
     </div>
   );

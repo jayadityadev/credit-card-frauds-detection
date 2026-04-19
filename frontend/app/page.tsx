@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { useMemo, useState } from "react";
 import ModelComparison from "./components/ModelComparison";
 import MLInsights from "./components/MLInsights";
@@ -203,6 +204,32 @@ export default function Home() {
 
         {result ? <ModelComparison result={result} /> : null}
         <MLInsights />
+
+        <section className="mt-16 mb-8" style={{ animation: "blur-fade-in 0.8s ease-out 0.5s both" }}>
+          <div className="relative rounded-2xl border border-purple-500/20 bg-gradient-to-br from-purple-500/10 to-purple-600/5 p-8 backdrop-blur-xl overflow-hidden group">
+            <div className="absolute inset-0 rounded-2xl" style={{ animation: "glow-border 3s ease-in-out infinite", pointerEvents: "none" }} />
+            
+            <div className="relative z-10 flex flex-col md:flex-row items-center justify-between gap-6">
+              <div>
+                <h3 className="text-2xl font-bold text-white">Detailed Metrics & Visualizations</h3>
+                <p className="mt-2 text-gray-400">Explore comprehensive plots, confusion matrices, ROC/PR curves, and feature importance analysis</p>
+              </div>
+              
+              <Link
+                href="/metrics"
+                className="relative rounded-lg border border-purple-500/40 bg-gradient-to-r from-purple-500/20 to-purple-600/10 px-8 py-4 text-base font-semibold text-purple-300 transition-all duration-300 hover:border-purple-400/60 hover:shadow-[0_0_30px_rgba(139,92,246,0.4)] flex items-center gap-2 group/btn overflow-hidden whitespace-nowrap"
+              >
+                <span className="relative z-10 flex items-center gap-2">
+                  View Metrics Page
+                  <svg className="h-5 w-5 group-hover/btn:translate-x-1 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
+                  </svg>
+                </span>
+                <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white to-transparent opacity-0 group-hover/btn:opacity-20" style={{ animation: "shimmer 2s infinite" }} />
+              </Link>
+            </div>
+          </div>
+        </section>
       </main>
     </div>
   );

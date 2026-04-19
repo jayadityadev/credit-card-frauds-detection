@@ -51,53 +51,82 @@ const INSIGHTS = [
 
 export default function MLInsights() {
   return (
-    <section className="mt-10 rounded-3xl border border-black/10 bg-white/70 p-6 shadow-[0_12px_45px_rgba(23,29,42,0.1)] backdrop-blur-sm">
-      <p className="text-xs tracking-[0.2em] text-slate-600 uppercase">ML Insights</p>
-      <h2 className="mt-2 text-2xl font-bold text-[var(--ink)]">What The Notebooks Established</h2>
+    <section className="mt-14 space-y-8">
+      <div style={{ animation: "blur-fade-in 0.8s ease-out" }}>
+        <p className="text-xs tracking-widest text-cyan-400/70 uppercase font-semibold">Dataset Overview</p>
+        <h2 className="mt-2 text-3xl font-bold text-white">Training Data & Statistics</h2>
+      </div>
 
-      <div className="mt-5 grid grid-cols-2 gap-3 md:grid-cols-4">
-        {DATA_FACTS.map((fact) => (
-          <div key={fact.label} className="rounded-2xl border border-slate-200 bg-white p-3">
-            <p className="text-xs tracking-[0.08em] text-slate-600 uppercase">{fact.label}</p>
-            <p className="mt-1 text-lg font-semibold text-slate-900">{fact.value}</p>
+      <div className="grid grid-cols-2 gap-4 md:grid-cols-4">
+        {DATA_FACTS.map((fact, idx) => (
+          <div
+            key={fact.label}
+            className="relative rounded-lg border border-cyan-500/20 bg-gradient-to-br from-[var(--background-secondary)]/80 via-[var(--background)]/60 to-[var(--background)]/40 p-5 backdrop-blur-xl overflow-hidden group"
+            style={{ animation: `bounce-in 0.6s cubic-bezier(0.34, 1.56, 0.64, 1) ${idx * 100}ms both` }}
+          >
+            <div className="absolute inset-0 rounded-lg" style={{ animation: "glow-border 3s ease-in-out infinite", pointerEvents: "none" }} />
+            <div className="relative z-10">
+              <p className="text-xs tracking-widest text-gray-500 uppercase font-semibold">{fact.label}</p>
+              <p className="mt-3 text-2xl font-bold text-cyan-300">{fact.value}</p>
+            </div>
           </div>
         ))}
       </div>
 
-      <div className="mt-6 overflow-x-auto rounded-2xl border border-slate-200 bg-white">
-        <table className="min-w-full text-sm">
-          <thead className="bg-slate-50 text-slate-700">
-            <tr>
-              <th className="px-3 py-2 text-left font-semibold">Model</th>
-              <th className="px-3 py-2 text-left font-semibold">Precision</th>
-              <th className="px-3 py-2 text-left font-semibold">Recall</th>
-              <th className="px-3 py-2 text-left font-semibold">F1</th>
-              <th className="px-3 py-2 text-left font-semibold">PR-AUC</th>
-              <th className="px-3 py-2 text-left font-semibold">ROC-AUC</th>
-            </tr>
-          </thead>
-          <tbody>
-            {MODEL_METRICS.map((row) => (
-              <tr key={row.model} className="border-t border-slate-100">
-                <td className="px-3 py-2 font-medium text-slate-900">{row.model}</td>
-                <td className="px-3 py-2">{row.precision}</td>
-                <td className="px-3 py-2">{row.recall}</td>
-                <td className="px-3 py-2">{row.f1}</td>
-                <td className="px-3 py-2">{row.prAuc}</td>
-                <td className="px-3 py-2">{row.rocAuc}</td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
+      <div className="relative rounded-lg border border-cyan-500/20 bg-gradient-to-br from-[var(--background-secondary)]/80 via-[var(--background)]/60 to-[var(--background)]/40 p-6 backdrop-blur-xl overflow-hidden" style={{ animation: "blur-fade-in 0.8s ease-out 0.2s both" }}>
+        <div className="absolute inset-0 rounded-lg" style={{ animation: "glow-border 3s ease-in-out infinite", pointerEvents: "none" }} />
+        
+        <div className="relative z-10">
+          <h3 className="text-xl font-bold text-white mb-6">Model Performance Metrics</h3>
+          <div className="overflow-x-auto">
+            <table className="min-w-full text-sm">
+              <thead>
+                <tr className="border-b border-cyan-500/20">
+                  <th className="px-4 py-3 text-left font-semibold text-cyan-300">Model</th>
+                  <th className="px-4 py-3 text-left font-semibold text-cyan-300">Precision</th>
+                  <th className="px-4 py-3 text-left font-semibold text-cyan-300">Recall</th>
+                  <th className="px-4 py-3 text-left font-semibold text-cyan-300">F1 Score</th>
+                  <th className="px-4 py-3 text-left font-semibold text-cyan-300">PR-AUC</th>
+                  <th className="px-4 py-3 text-left font-semibold text-cyan-300">ROC-AUC</th>
+                </tr>
+              </thead>
+              <tbody>
+                {MODEL_METRICS.map((row, idx) => (
+                  <tr
+                    key={row.model}
+                    className="border-b border-cyan-500/10 hover:bg-cyan-500/5 transition-colors duration-300"
+                    style={{ animation: `slideInDown 0.5s ease-out ${idx * 60}ms both` }}
+                  >
+                    <td className="px-4 py-3 font-semibold text-white">{row.model}</td>
+                    <td className="px-4 py-3 text-gray-300">{row.precision}</td>
+                    <td className="px-4 py-3 text-gray-300">{row.recall}</td>
+                    <td className="px-4 py-3 font-semibold text-emerald-300">{row.f1}</td>
+                    <td className="px-4 py-3 text-gray-300">{row.prAuc}</td>
+                    <td className="px-4 py-3 font-semibold text-cyan-300">{row.rocAuc}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </div>
       </div>
 
-      <ul className="mt-6 space-y-2 text-sm text-slate-800">
-        {INSIGHTS.map((item) => (
-          <li key={item} className="rounded-xl border border-slate-200 bg-white px-3 py-2">
-            {item}
-          </li>
-        ))}
-      </ul>
+      <div>
+        <h3 className="text-2xl font-bold text-white mb-4" style={{ animation: "blur-fade-in 0.8s ease-out 0.3s both" }}>Key Insights</h3>
+        <ul className="space-y-3">
+          {INSIGHTS.map((item, idx) => (
+            <li
+              key={item}
+              className="relative rounded-lg border border-purple-500/20 bg-gradient-to-r from-purple-500/10 to-purple-600/5 px-5 py-4 text-gray-300 backdrop-blur-xl flex items-start gap-3 group overflow-hidden"
+              style={{ animation: `slideInDown 0.5s ease-out ${idx * 80}ms both` }}
+            >
+              <div className="absolute inset-0 rounded-lg" style={{ animation: "glow-border 3s ease-in-out infinite", pointerEvents: "none" }} />
+              <span className="relative z-10 text-purple-400 font-bold text-lg mt-0.5">→</span>
+              <p className="relative z-10 leading-relaxed">{item}</p>
+            </li>
+          ))}
+        </ul>
+      </div>
 
       <div className="mt-6 rounded-2xl border border-slate-200 bg-white p-4">
         <p className="text-sm text-slate-700">

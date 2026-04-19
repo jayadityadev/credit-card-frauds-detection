@@ -42,11 +42,12 @@ export default function ModelComparison({ result }: ModelComparisonProps) {
   ];
 
   return (
-    <section className="mt-8">
-      <h2 className="text-xl font-semibold mb-4" style={{ animation: "slideInDown 0.5s ease-out" }}>
-        Prediction Results
-      </h2>
-      <div className="grid grid-cols-1 gap-4 md:grid-cols-2 xl:grid-cols-4">
+    <section className="mt-12">
+      <div className="mb-8" style={{ animation: "blur-fade-in 0.8s ease-out" }}>
+        <h2 className="text-3xl font-bold text-white mb-2">Ensemble Prediction Results</h2>
+        <p className="text-gray-400">Real-time analysis from three independent machine learning models</p>
+      </div>
+      <div className="grid grid-cols-1 gap-6 md:grid-cols-2 xl:grid-cols-4">
         {cards.map((card, idx) => (
           <ResultCard
             key={card.title}

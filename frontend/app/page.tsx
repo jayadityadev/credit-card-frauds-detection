@@ -145,42 +145,47 @@ export default function Home() {
 
   return (
     <div className="relative min-h-screen overflow-hidden px-4 py-10 md:px-8">
-      <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_15%_10%,rgba(15,148,136,0.13),transparent_32%),radial-gradient(circle_at_90%_8%,rgba(227,113,50,0.15),transparent_28%),radial-gradient(circle_at_85%_90%,rgba(31,111,235,0.12),transparent_30%)]" />
-      <main className="relative mx-auto max-w-6xl">
-        <header className="mb-8 rounded-3xl border border-black/10 bg-white/70 p-6 shadow-[0_12px_45px_rgba(23,29,42,0.1)] backdrop-blur-sm">
-          <p className="text-xs tracking-[0.2em] text-slate-600 uppercase">Phase 6 Frontend</p>
-          <h1 className="mt-2 text-3xl font-bold tracking-tight text-[var(--ink)] md:text-4xl">
-            Credit Card Fraud Detection Console
-          </h1>
-          <p className="mt-3 max-w-3xl text-sm text-slate-700 md:text-base">
-            Paste one dataset row and run all three models instantly. Isolation Forest is
-            shown as an anomaly score, while Logistic Regression and Random Forest show
-            thresholded fraud or legit verdicts. Scroll below to review all ML insights,
-            plots, and metrics derived from the notebook pipeline.
-          </p>
-          <div className="mt-5 flex flex-wrap gap-2">
-            {sampleInfo.map((sample, idx) => (
-              <button
-                key={sample.label}
-                type="button"
-                onClick={() => {
-                  setRawInput(sample.value);
-                  setParsedTransaction(null);
-                  setResult(null);
-                  setErrorMessage("");
-                }}
-                className="relative rounded-full border border-black/15 bg-white px-4 py-2 text-sm font-medium transition hover:-translate-y-0.5 hover:bg-slate-50 overflow-hidden group"
-                style={{ animation: `slideInDown 0.5s ease-out ${idx * 100}ms both` }}
-              >
-                <span className="relative z-10 flex items-center gap-2">
-                  <span>
-                    {idx === 0 ? "✓" : "⚠"}
-                  </span>
-                  {sample.label}
-                </span>
-                <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white to-transparent opacity-0 group-hover:opacity-30" style={{ animation: "shimmer 2s infinite" }} />
-              </button>
-            ))}
+      <main className="relative mx-auto max-w-6xl z-10">
+        <header className="mb-8 group">
+          <div className="relative rounded-2xl border border-cyan-500/20 bg-gradient-to-br from-[var(--background-secondary)]/80 via-[var(--background)]/60 to-[var(--background)]/40 p-8 backdrop-blur-xl overflow-hidden">
+            <div className="absolute inset-0 rounded-2xl" style={{ animation: "glow-border 3s ease-in-out infinite", pointerEvents: "none" }} />
+            
+            <div className="relative z-10">
+              <p className="text-xs tracking-[0.3em] text-cyan-400/70 uppercase font-semibold">Advanced ML Detection System</p>
+              <h1 className="mt-3 text-4xl md:text-5xl font-bold tracking-tight text-white" style={{ animation: "blur-fade-in 0.8s ease-out" }}>
+                Fraud Detection Console
+              </h1>
+              <p className="mt-4 max-w-3xl text-sm text-gray-400 md:text-base leading-relaxed">
+                Leverage ensemble machine learning with real-time analysis. Paste a transaction row and analyze with 3 independent models—Isolation Forest, Logistic Regression, and Random Forest.
+              </p>
+              
+              <div className="mt-6 flex flex-wrap gap-3">
+                {sampleInfo.map((sample, idx) => (
+                  <button
+                    key={sample.label}
+                    type="button"
+                    onClick={() => {
+                      setRawInput(sample.value);
+                      setParsedTransaction(null);
+                      setResult(null);
+                      setErrorMessage("");
+                    }}
+                    className={`relative rounded-lg px-5 py-2.5 text-sm font-semibold transition-all duration-300 overflow-hidden group/btn ${
+                      idx === 0 
+                        ? "border border-emerald-500/30 bg-gradient-to-r from-emerald-500/10 to-emerald-600/5 text-emerald-300 hover:border-emerald-500/60 hover:shadow-[0_0_20px_rgba(16,185,129,0.3)]" 
+                        : "border border-orange-500/30 bg-gradient-to-r from-orange-500/10 to-orange-600/5 text-orange-300 hover:border-orange-500/60 hover:shadow-[0_0_20px_rgba(245,158,11,0.3)]"
+                    }`}
+                    style={{ animation: `slideInDown 0.6s cubic-bezier(0.34, 1.56, 0.64, 1) ${idx * 80}ms both` }}
+                  >
+                    <span className="relative z-10 flex items-center gap-2">
+                      <span className="text-lg">{idx === 0 ? "✓" : "⚠"}</span>
+                      {sample.label}
+                    </span>
+                    <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white to-transparent opacity-0 group-hover/btn:opacity-20" style={{ animation: "shimmer 2s infinite" }} />
+                  </button>
+                ))}
+              </div>
+            </div>
           </div>
         </header>
 
